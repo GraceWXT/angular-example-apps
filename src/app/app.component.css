@@ -1,3 +1,10 @@
 h1 {
   color: darkblue;
+  background-color: blanchedalmond;
+}
+
+/* Rules only applies to the elements directly shown in the component
+NOT to any nested component */
+p {
+  font-weight: bold;
 }
