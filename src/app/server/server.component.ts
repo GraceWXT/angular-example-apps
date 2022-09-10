@@ -7,6 +7,10 @@ import { Component } from "@angular/core";
     p {
       color: #5f9ea0;
     }
+
+    .offline {
+      color: white;
+    }
   `]
 })
 export class ServerComponent {
