@@ -17,9 +17,24 @@
   class="btn btn-primary"
   [disabled]="!allowNewServer"
   (click)="onCreateServer()"
-  >Add Server</button>
+>
+  Add Server
+</button>
+
+  <!-- String interpolation vs property binding -->
   <!-- <p>{{ allowNewServer }}</p>
   <p [innerText]="allowNewServer"></p> -->
-  <p>{{ serverCreationStatus }}</p>
+
+  <!-- <p>{{ serverCreationStatus }}</p> -->
+
+  <!-- Built-in ngIf directive using an attribute selector -->
+  <!-- structural directive (changes the DOM) requires * before the attribute -->
+  <p *ngIf="serverCreated">Server "{{ serverName }}" was created!</p>
+
+  <!-- when using else noServer - local reference -->
+  <!-- <ng-template #noServer>
+    <p>No Server was created!</p>
+  </ng-template> -->
+
 <app-server></app-server>
 <app-server></app-server>
