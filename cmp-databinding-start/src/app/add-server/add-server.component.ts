@@ -14,23 +14,30 @@ export class AddServerComponent implements OnInit {
     serverName: string;
     serverContent: string;
   }>();
-  newServerName = "";
+  // newServerName = "";
   newServerContent = "";
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onAddServer() {
+  // If passing serverNameInput.value directly:
+  // onAddServer(serverName) {
+  //   this.serverAdded.emit({
+  //     serverName,
+  //     serverContent: this.newServerContent,
+  //   });
+  // }
+  onAddServer(serverNameInput: HTMLInputElement) {
     this.serverAdded.emit({
-      serverName: this.newServerName,
+      serverName: serverNameInput.value,
       serverContent: this.newServerContent,
     });
   }
 
-  onAddBlueprint() {
+  onAddBlueprint(serverNameInput: HTMLInputElement) {
     this.blueprintAdded.emit({
-      serverName: this.newServerName,
+      serverName: serverNameInput.value,
       serverContent: this.newServerContent,
     });
   }
