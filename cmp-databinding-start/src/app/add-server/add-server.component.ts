@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 
 @Component({
   selector: "app-add-server",
@@ -15,7 +22,9 @@ export class AddServerComponent implements OnInit {
     serverContent: string;
   }>();
   // newServerName = "";
-  newServerContent = "";
+  // newServerContent = "";
+  @ViewChild("serverContentInput", { static: true })
+  serverContentInput: ElementRef;
 
   constructor() {}
 
@@ -31,14 +40,14 @@ export class AddServerComponent implements OnInit {
   onAddServer(serverNameInput: HTMLInputElement) {
     this.serverAdded.emit({
       serverName: serverNameInput.value,
-      serverContent: this.newServerContent,
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
 
   onAddBlueprint(serverNameInput: HTMLInputElement) {
     this.blueprintAdded.emit({
       serverName: serverNameInput.value,
-      serverContent: this.newServerContent,
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
 }
