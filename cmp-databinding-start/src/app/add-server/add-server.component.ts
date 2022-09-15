@@ -10,7 +10,7 @@ export class AddServerComponent implements OnInit {
     serverName: string;
     serverContent: string;
   }>();
-  @Output() blueprintAdded = new EventEmitter<{
+  @Output("bpCreated") blueprintAdded = new EventEmitter<{
     serverName: string;
     serverContent: string;
   }>();
