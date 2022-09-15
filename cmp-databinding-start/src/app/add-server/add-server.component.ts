@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-add-server",
@@ -6,6 +6,14 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./add-server.component.css"],
 })
 export class AddServerComponent implements OnInit {
+  @Output() serverAdded = new EventEmitter<{
+    serverName: string;
+    serverContent: string;
+  }>();
+  @Output() blueprintAdded = new EventEmitter<{
+    serverName: string;
+    serverContent: string;
+  }>();
   newServerName = "";
   newServerContent = "";
 
@@ -14,18 +22,16 @@ export class AddServerComponent implements OnInit {
   ngOnInit(): void {}
 
   onAddServer() {
-    this.serverElements.push({
-      type: "server",
-      name: this.newServerName,
-      content: this.newServerContent,
+    this.serverAdded.emit({
+      serverName: this.newServerName,
+      serverContent: this.newServerContent,
     });
   }
 
   onAddBlueprint() {
-    this.serverElements.push({
-      type: "blueprint",
-      name: this.newServerName,
-      content: this.newServerContent,
+    this.blueprintAdded.emit({
+      serverName: this.newServerName,
+      serverContent: this.newServerContent,
     });
   }
 }
