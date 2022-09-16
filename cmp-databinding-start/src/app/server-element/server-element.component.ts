@@ -4,6 +4,7 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
+  ContentChild,
   DoCheck,
   ElementRef,
   Input,
@@ -37,6 +38,7 @@ export class ServerElementComponent
   @Input("srvElement") element: { type: string; name: string; content: string };
   @Input() name: string;
   @ViewChild("heading", { static: true }) header: ElementRef;
+  @ContentChild("contentParagraph", { static: true }) p: ElementRef;
 
   constructor() {
     console.log("server element constructor called");
@@ -53,6 +55,7 @@ export class ServerElementComponent
   ngOnInit(): void {
     console.log("server element ngOnInit called");
     console.log("header text content:", this.header.nativeElement.textContent);
+    console.log("Paragraph text content:", this.p.nativeElement.textContent);
   }
 
   // A custom change-detection function to run in addition to the default change detector
@@ -63,6 +66,7 @@ export class ServerElementComponent
   // After the <ng-content> has been initialized
   ngAfterContentInit() {
     console.log("ngAfterContentInit called");
+    console.log("Paragraph text content:", this.p.nativeElement.textContent);
   }
 
   // After each default change detector has checked the projected content
