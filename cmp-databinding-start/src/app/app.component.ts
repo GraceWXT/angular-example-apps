@@ -33,7 +33,7 @@ export class AppComponent {
     this.serverElements[0].name = "Changed";
   }
 
-  onDestoryFirst() {
+  onDestroyFirst() {
     this.serverElements.shift();
   }
 }
