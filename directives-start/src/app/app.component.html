@@ -36,6 +36,9 @@
         <p>Only odd</p>
       </ng-template>
       <p appBasicHighlight>Styled with Basic Highlight</p>
+      <!-- directive selector: appBetterHightlight, directive property alias: same as director selector -->
+      <!-- directive property binding shorthand 1: add [] to directive selector = alias -->
+      <!-- directive property binding shorthand 2: for property type: string, omit [] around property and omit '' around string -->
       <p [appBetterHighlight]="'yellowgreen'" defaultColor="darkorange">
         Styled with Better Highlight directive
       </p>
