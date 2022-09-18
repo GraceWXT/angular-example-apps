@@ -13,7 +13,11 @@ export class NewAccountComponent {
   constructor(
     // private loggingService: LoggingService,
     private accountsService: AccountsService
-  ) {}
+  ) {
+    /** The event handler for statusUpdated */
+    const next = (status: string) => alert(`NewStatus:${status}`);
+    this.accountsService.statusUpdated.subscribe(next);
+  }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountsService.addAccount(accountName, accountStatus);
