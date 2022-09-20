@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -7,11 +7,19 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('form') form: NgForm;
+
   suggestUserName() {
     const suggestedName = 'Superuser';
   }
 
-  onSubmit(form: NgForm) {
-    console.log('form.value', form.value);
+  // onSubmit(form: NgForm) {
+  //   console.log('form.value', form.value);
+  // }
+
+  // An alternative way of getting access to the form
+  // Possible to access ViewChild form value when it's not submitted yet
+  onSubmit() {
+    console.log('this.form', this.form);
   }
 }
