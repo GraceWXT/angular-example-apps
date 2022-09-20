@@ -52,6 +52,9 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
+  // useHash: true - adds # after the domain and before all paths,
+  // so that Angular can take over all the paths parsing in case the browser doesn't support paths parsing in the client
+  // imports: [RouterModule.forRoot(appRoutes), { useHash: true }],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
