@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,6 +18,9 @@ export class AppComponent implements OnInit {
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
     console.log(postData);
+    this.http.post(`${baseUrl}/posts.json`, postData).subscribe((resData) => {
+      console.log('resData', resData);
+    });
   }
 
   onFetchPosts() {
