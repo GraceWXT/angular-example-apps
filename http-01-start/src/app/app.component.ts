@@ -12,6 +12,7 @@ const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
 })
 export class AppComponent implements OnInit {
   loadedPosts = [];
+  fetching = false;
 
   constructor(private http: HttpClient) {}
 
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
-    this.fetchPosts;
+    this.fetchPosts();
   }
 
   onClearPosts() {
@@ -39,6 +40,8 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts() {
+    this.fetching = true;
+    console.log('fetching:', this.fetching);
     this.http
       .get<{ [key: string]: Post }>(`${baseUrl}/posts.json`)
       .pipe(
@@ -56,6 +59,8 @@ export class AppComponent implements OnInit {
       .subscribe((posts) => {
         console.log('GET posts', posts);
         this.loadedPosts = posts;
+        this.fetching = false;
+        console.log('fetching:', this.fetching);
       });
   }
 }
