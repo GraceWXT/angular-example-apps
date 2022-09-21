@@ -1,7 +1,12 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEventType,
+  HttpHeaders,
+  HttpParams
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 
 import { Post } from './post.model';
 
@@ -65,6 +70,18 @@ export class PostsService {
   }
 
   deletePosts() {
-    return this.http.delete(`${baseUrl}/posts.json`);
+    return this.http
+      .delete(`${baseUrl}/posts.json`, { observe: 'events' })
+      .pipe(
+        tap((event) => {
+          console.log('event', event);
+          if (event.type === HttpEventType.Sent) {
+            // e.g. Inform the user request has been sent...
+          }
+          if (event.type === HttpEventType.Response) {
+            console.log('event.body', event.body);
+          }
+        })
+      );
   }
 }
