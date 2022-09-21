@@ -19,7 +19,9 @@ export class PostsService {
     // It is only needed to make sure the req gets sent
     console.log(postData);
     this.http
-      .post<{ name: string }>(`${baseUrl}/posts.json`, postData)
+      .post<{ name: string }>(`${baseUrl}/posts.json`, postData, {
+        observe: 'response'
+      })
       .subscribe(
         (resData) => {
           console.log('POST resData', resData);
