@@ -13,6 +13,7 @@ const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
 export class AppComponent implements OnInit {
   loadedPosts = [];
   fetching = false;
+  error = null;
 
   constructor(private http: HttpClient, private postService: PostsService) {}
 
@@ -39,10 +40,16 @@ export class AppComponent implements OnInit {
   private fetchPosts() {
     // Calling subscribe in the component since it needs the returned data
     this.fetching = true;
-    this.postService.fetchPosts().subscribe((posts) => {
-      this.loadedPosts = posts;
-      this.fetching = false;
-      console.log('GET posts', posts);
-    });
+    this.postService.fetchPosts().subscribe(
+      (posts) => {
+        this.loadedPosts = posts;
+        this.fetching = false;
+        console.log('GET posts', posts);
+      },
+      (error) => {
+        console.log('error', error);
+        this.error = error;
+      }
+    );
   }
 }
