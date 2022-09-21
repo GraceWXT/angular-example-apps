@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe((posts) => {
         console.log('GET posts', posts);
+        this.loadedPosts = posts;
       });
   }
 }
