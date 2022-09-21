@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Post } from './post.model';
 
 const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
 
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
-  onCreatePost(postData: { title: string; content: string }) {
+  onCreatePost(postData: Post) {
     // Send Http request
     console.log(postData);
     this.http.post(`${baseUrl}/posts.json`, postData).subscribe((resData) => {
@@ -39,8 +40,8 @@ export class AppComponent implements OnInit {
     this.http
       .get(`${baseUrl}/posts.json`)
       .pipe(
-        map((resData) => {
-          const postsArray = [];
+        map((resData: { [key: string]: Post }) => {
+          const postsArray: Post[] = [];
           for (const key in resData) {
             // Condition to make true it's not accessing property of prototype
             if (resData.hasOwnProperty(key)) {
