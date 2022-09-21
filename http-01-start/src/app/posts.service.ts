@@ -49,6 +49,8 @@ export class PostsService {
         }),
         params: new HttpParams().set('print', 'pretty')
         // params: searchParams
+        // Will cause error here but possible to config. Default is 'json'
+        // responseType: 'text'
       })
       .pipe(
         map((resData) => {
