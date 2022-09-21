@@ -8,7 +8,10 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent {
   @ViewChild('form') form: NgForm;
+  // One-way Binding
   defaultQuestion = 'pet';
+  // Two-way Binding
+  answer = '';
 
   suggestUserName() {
     const suggestedName = 'Superuser';
