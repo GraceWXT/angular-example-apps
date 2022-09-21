@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { LoggingInterceptorService } from './logging-interceptor.servic';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,12 @@ import { AuthInterceptorService } from './auth-interceptor.service';
       useClass: AuthInterceptorService,
       // Each req can have multiple interceptors
       // new ones does not replacing existing ones
+      multi: true
+    },
+    // The order here is the order that interceptors gets executed
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptorService,
       multi: true
     }
   ],
