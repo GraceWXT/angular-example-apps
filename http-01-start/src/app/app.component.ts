@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { PostsService } from './posts.service';
+import { Subscription } from 'rxjs';
 
 const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
 
@@ -10,15 +11,23 @@ const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
   fetching = false;
-  error = null;
+  errorMessage = null;
+  private errorSub: Subscription;
 
   constructor(private http: HttpClient, private postService: PostsService) {}
 
   ngOnInit() {
+    this.errorSub = this.postService.error.subscribe((errorMessage) => {
+      this.errorMessage = errorMessage;
+    });
     this.fetchPosts();
+  }
+
+  ngOnDestroy(): void {
+    this.errorSub.unsubscribe();
   }
 
   onCreatePost(postData: Post) {
@@ -48,7 +57,7 @@ export class AppComponent implements OnInit {
       },
       (error) => {
         console.log('error', error);
-        this.error = error;
+        this.errorMessage = error.message;
       }
     );
   }
