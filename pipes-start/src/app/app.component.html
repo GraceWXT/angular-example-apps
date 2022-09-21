@@ -4,6 +4,10 @@
       <label for="filterString">Status Filter String </label>
       <input name="filterString" type="text" [(ngModel)]="filterString" />
       <hr />
+      <button class="btn btn-primary" (click)="onAddServer()">
+        Add Testing Server
+      </button>
+      <hr />
       <ul class="list-group">
         <li
           class="list-group-item"
