@@ -13,21 +13,30 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchPosts();
+  }
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
     console.log(postData);
     this.http.post(`${baseUrl}/posts.json`, postData).subscribe((resData) => {
-      console.log('resData', resData);
+      console.log('POST resData', resData);
     });
   }
 
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts;
   }
 
   onClearPosts() {
     // Send Http request
+  }
+
+  private fetchPosts() {
+    this.http.get(`${baseUrl}/posts.json`).subscribe((resData) => {
+      console.log('GET resData', resData);
+    });
   }
 }
