@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Post } from './post.model';
+import { PostsService } from './posts.service';
 
 const baseUrl = 'https://ng-complete-guide-798d4-default-rtdb.firebaseio.com';
 
@@ -14,53 +14,22 @@ export class AppComponent implements OnInit {
   loadedPosts = [];
   fetching = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postService: PostsService) {}
 
   ngOnInit() {
-    this.fetchPosts();
+    this.postService.fetchPosts();
   }
 
   onCreatePost(postData: Post) {
-    // Send Http request
-    console.log(postData);
-    this.http
-      .post<{ name: string }>(`${baseUrl}/posts.json`, postData)
-      .subscribe((resData) => {
-        console.log('POST resData', resData);
-      });
+    this.postService.createPost(postData);
   }
 
   onFetchPosts() {
     // Send Http request
-    this.fetchPosts();
+    this.postService.fetchPosts();
   }
 
   onClearPosts() {
     // Send Http request
-  }
-
-  private fetchPosts() {
-    this.fetching = true;
-    console.log('fetching:', this.fetching);
-    this.http
-      .get<{ [key: string]: Post }>(`${baseUrl}/posts.json`)
-      .pipe(
-        map((resData) => {
-          const postsArray: Post[] = [];
-          for (const key in resData) {
-            // Condition to make true it's not accessing property of prototype
-            if (resData.hasOwnProperty(key)) {
-              postsArray.push({ id: key, ...resData[key] });
-            }
-          }
-          return postsArray;
-        })
-      )
-      .subscribe((posts) => {
-        console.log('GET posts', posts);
-        this.loadedPosts = posts;
-        this.fetching = false;
-        console.log('fetching:', this.fetching);
-      });
   }
 }
