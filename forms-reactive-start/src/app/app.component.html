@@ -17,8 +17,22 @@
                 signupForm.get('userData.username').touched
               "
               class="help-block"
-              >Please enter a valid username</span
             >
+              <span
+                *ngIf="signupForm.get('userData.username').errors['required']"
+                class="help-block"
+              >
+                This field is required
+              </span>
+              <span
+                *ngIf="
+                  signupForm.get('userData.username').errors['invalidUsername']
+                "
+                class="help-block"
+              >
+                Please enter a valid username
+              </span>
+            </span>
           </div>
           <div class="form-group">
             <label for="email">email</label>
