@@ -22,9 +22,11 @@ export class AppComponent implements OnInit {
   onCreatePost(postData: Post) {
     // Send Http request
     console.log(postData);
-    this.http.post(`${baseUrl}/posts.json`, postData).subscribe((resData) => {
-      console.log('POST resData', resData);
-    });
+    this.http
+      .post<{ name: string }>(`${baseUrl}/posts.json`, postData)
+      .subscribe((resData) => {
+        console.log('POST resData', resData);
+      });
   }
 
   onFetchPosts() {
@@ -38,9 +40,9 @@ export class AppComponent implements OnInit {
 
   private fetchPosts() {
     this.http
-      .get(`${baseUrl}/posts.json`)
+      .get<{ [key: string]: Post }>(`${baseUrl}/posts.json`)
       .pipe(
-        map((resData: { [key: string]: Post }) => {
+        map((resData) => {
           const postsArray: Post[] = [];
           for (const key in resData) {
             // Condition to make true it's not accessing property of prototype
