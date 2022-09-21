@@ -1,10 +1,12 @@
 import {
   HttpEvent,
+  HttpEventType,
   HttpHandler,
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export class AuthInterceptorService implements HttpInterceptor {
   intercept(
@@ -23,6 +25,18 @@ export class AuthInterceptorService implements HttpInterceptor {
     });
 
     // To continue sending the request
-    return next.handle(modifiedReq);
+    return (
+      next
+        .handle(modifiedReq)
+        // In an interceptor, tap always receives an event regardless of the responseType config
+        .pipe(
+          tap((event) => {
+            console.log('event', event);
+            if (event.type === HttpEventType.Response) {
+              console.log('Response body: ', event.body);
+            }
+          })
+        )
+    );
   }
 }
