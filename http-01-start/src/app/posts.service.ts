@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -31,23 +31,29 @@ export class PostsService {
   }
 
   fetchPosts() {
-    return this.http.get<{ [key: string]: Post }>(`${baseUrl}/posts.json`).pipe(
-      map((resData) => {
-        const postsArray: Post[] = [];
-        for (const key in resData) {
-          // Condition to make true it's not accessing property of prototype
-          if (resData.hasOwnProperty(key)) {
-            postsArray.push({ id: key, ...resData[key] });
-          }
-        }
-        return postsArray;
-      }),
-      catchError((errorRes) => {
-        // Some generic error handling tasks, e.g. logging, sending to server, etc.
-        // throwError creates an Observable so that the error can still be subscribed outside the service
-        return throwError(errorRes);
+    return this.http
+      .get<{ [key: string]: Post }>(`${baseUrl}/posts.json`, {
+        headers: new HttpHeaders({
+          'custom-header': 'Hello'
+        })
       })
-    );
+      .pipe(
+        map((resData) => {
+          const postsArray: Post[] = [];
+          for (const key in resData) {
+            // Condition to make true it's not accessing property of prototype
+            if (resData.hasOwnProperty(key)) {
+              postsArray.push({ id: key, ...resData[key] });
+            }
+          }
+          return postsArray;
+        }),
+        catchError((errorRes) => {
+          // Some generic error handling tasks, e.g. logging, sending to server, etc.
+          // throwError creates an Observable so that the error can still be subscribed outside the service
+          return throwError(errorRes);
+        })
+      );
   }
 
   deletePosts() {
