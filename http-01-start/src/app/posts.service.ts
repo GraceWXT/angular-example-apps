@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Post } from './post.model';
 
@@ -41,6 +41,11 @@ export class PostsService {
           }
         }
         return postsArray;
+      }),
+      catchError((errorRes) => {
+        // Some generic error handling tasks, e.g. logging, sending to server, etc.
+        // throwError creates an Observable so that the error can still be subscribed outside the service
+        return throwError(errorRes);
       })
     );
   }
