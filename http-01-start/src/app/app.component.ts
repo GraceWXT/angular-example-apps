@@ -46,6 +46,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDismissError() {
+    this.errorMessage = null;
+  }
+
   private fetchPosts() {
     // Calling subscribe in the component since it needs the returned data
     this.fetching = true;
@@ -57,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       (error) => {
         console.log('error', error);
+        this.fetching = false;
         this.errorMessage = error.message;
       }
     );
