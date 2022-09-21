@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -31,11 +31,17 @@ export class PostsService {
   }
 
   fetchPosts() {
+    // Alternative way, possible to append multiple times with different key-value pairs
+    // let searchParams = new HttpParams();
+    // searchParams = searchParams.append('print', 'pretty');
+    // searchParams = searchParams.append('custom-key', 'value');
     return this.http
       .get<{ [key: string]: Post }>(`${baseUrl}/posts.json`, {
         headers: new HttpHeaders({
           'custom-header': 'Hello'
-        })
+        }),
+        params: new HttpParams().set('print', 'pretty')
+        // params: searchParams
       })
       .pipe(
         map((resData) => {
