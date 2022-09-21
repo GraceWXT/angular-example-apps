@@ -12,6 +12,7 @@ export class AppComponent {
   defaultQuestion = 'pet';
   // Two-way Binding
   answer = '';
+  genders = ['male', 'female'];
 
   suggestUserName() {
     const suggestedName = 'Superuser';
